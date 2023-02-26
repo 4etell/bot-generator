@@ -7,3 +7,7 @@ netty:
   default:
     allocator:
       max-order: 3
+rabbitmq:
+  uri: amqp://localhost:5672
+  username: admin
+  password: admin

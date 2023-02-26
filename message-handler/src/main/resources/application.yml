@@ -12,3 +12,6 @@ rabbitmq:
   uri: amqp://localhost:5672
   username: admin
   password: admin
+
+config-service:
+  queue-name: bot-config-${REPLICA_NAME}
