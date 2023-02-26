@@ -10,5 +10,4 @@ import lombok.NoArgsConstructor;
 public class MenuRowItemDto {
     private String command;
     private String title;
-    private Integer position;
 }

@@ -14,12 +14,18 @@ dependencies {
     compileOnly("org.projectlombok:lombok:1.16.20")
     annotationProcessor("io.micronaut:micronaut-http-validation")
     annotationProcessor("org.projectlombok:lombok:1.16.20")
+    annotationProcessor("org.mapstruct:mapstruct-processor:1.5.3.Final")
+
     implementation("io.micronaut:micronaut-http-client")
     implementation("io.micronaut.rabbitmq:micronaut-rabbitmq")
     implementation("io.micronaut:micronaut-jackson-databind")
     implementation("jakarta.annotation:jakarta.annotation-api")
     implementation("io.micronaut:micronaut-validation")
+    implementation("io.micronaut.reactor:micronaut-reactor")
+    implementation("org.mapstruct:mapstruct:1.5.3.Final")
+
     runtimeOnly("ch.qos.logback:logback-classic")
+
     testImplementation("org.mockito:mockito-core")
 }
 

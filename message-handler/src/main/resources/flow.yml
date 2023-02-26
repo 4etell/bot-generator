@@ -1,0 +1,26 @@
+states:
+  - name: About
+    command: "/about"
+    response:
+      - !text
+        text: "Я тестовый бот."
+  - name: Poem
+    command: "/poem"
+    response:
+      - !text
+        text: "Снегом зимушка-зима\n
+               Крыши заметает,\n
+               Новый год во все дома\n
+               Весело шагает."
+  - name: Start
+    command: "/start"
+    response:
+      - !menu
+        text: Привет!
+        rows:
+          - items:
+              - title: Обо мне
+                command: "/about"
+          - items:
+              - title: Расскажи стих
+                command: "/poem"

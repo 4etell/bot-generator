@@ -1,5 +1,7 @@
 package com.foretell.rabbit.listener.dto;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
@@ -15,7 +17,10 @@ public class MessageMenuDto extends AbstractMessageDto {
     private final String text;
     private final List<MenuRowDto> rows;
 
-    public MessageMenuDto(String chatId, String text, List<MenuRowDto> rows) {
+    @JsonCreator
+    public MessageMenuDto(@JsonProperty("chatId") String chatId,
+                          @JsonProperty("text") String text,
+                          @JsonProperty("rows") List<MenuRowDto> rows) {
         super(chatId, MENU_MESSAGE);
         this.text = text;
         this.rows = rows;

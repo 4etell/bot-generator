@@ -1,5 +1,7 @@
 package com.foretell.rabbit.client.dto;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
@@ -15,7 +17,10 @@ public class MessageFileDto extends AbstractMessageDto {
     private final List<FileDto> files;
     private final String text;
 
-    public MessageFileDto(String chatId, List<FileDto> files, String text) {
+    @JsonCreator
+    public MessageFileDto(@JsonProperty("chatId") String chatId,
+                          @JsonProperty("text") String text,
+                          @JsonProperty("files") List<FileDto> files) {
         super(chatId, FILE_MESSAGE);
         this.files = files;
         this.text = text;
