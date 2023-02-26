@@ -1,0 +1,9 @@
+micronaut:
+  application:
+    name: configService
+  server:
+    port: 8089
+netty:
+  default:
+    allocator:
+      max-order: 3
