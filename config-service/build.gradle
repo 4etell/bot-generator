@@ -11,11 +11,18 @@ repositories {
 }
 
 dependencies {
+    compileOnly("org.projectlombok:lombok:1.16.20")
+
     annotationProcessor("io.micronaut:micronaut-http-validation")
+    annotationProcessor("org.projectlombok:lombok:1.16.20")
+
     implementation("io.micronaut:micronaut-http-client")
     implementation("io.micronaut:micronaut-jackson-databind")
     implementation("io.micronaut.rabbitmq:micronaut-rabbitmq")
     implementation("jakarta.annotation:jakarta.annotation-api")
+    implementation("commons-io:commons-io:2.11.0")
+    implementation("io.micronaut.reactor:micronaut-reactor")
+    implementation("io.minio:minio:8.5.2")
     runtimeOnly("ch.qos.logback:logback-classic")
     implementation("io.micronaut:micronaut-validation")
 

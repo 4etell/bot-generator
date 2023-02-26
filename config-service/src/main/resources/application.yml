@@ -11,3 +11,8 @@ rabbitmq:
   uri: amqp://localhost:5672
   username: admin
   password: admin
+minio:
+  endpoint: http://localhost:9000
+  access-key: ${MINIO_ACCESS_KEY}
+  secret-key: ${MINIO_SECRET_KEY}
+  bucket-name: test-bucket-ui2

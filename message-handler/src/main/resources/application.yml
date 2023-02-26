@@ -15,3 +15,4 @@ rabbitmq:
 
 config-service:
   queue-name: bot-config-${REPLICA_NAME}
+  client-url: ${CONFIG_SERVICE_URL}

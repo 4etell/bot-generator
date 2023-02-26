@@ -1,5 +1,6 @@
 package com.foretell.flow;
 
+import com.foretell.client.ConfigServiceClient;
 import com.foretell.flow.dto.FlowConfigDto;
 import com.foretell.flow.dto.StateDto;
 import com.foretell.flow.exception.StateServiceException;
@@ -25,15 +26,17 @@ public class StateService {
 
     private final FlowConfigService flowConfigService;
     private final AtomicReference<FlowConfigDto> flowConfig;
+    private final ConfigServiceClient configServiceClient;
 
     @Inject
-    public StateService(FlowConfigService flowConfigService) {
+    public StateService(FlowConfigService flowConfigService, ConfigServiceClient configServiceClient) {
         this.flowConfigService = flowConfigService;
-        flowConfig = new AtomicReference<>(flowConfigService.getFlowConfig());
+        flowConfig = new AtomicReference<>(flowConfigService.getFlowConfig(configServiceClient.getFlowInputStream().block()));
+        this.configServiceClient = configServiceClient;
     }
 
     public void updateConfig() {
-        flowConfig.set(flowConfigService.getFlowConfig());
+        configServiceClient.getFlowInputStream().subscribe(inputStream -> flowConfig.set(flowConfigService.getFlowConfig(inputStream)));
     }
 
 
