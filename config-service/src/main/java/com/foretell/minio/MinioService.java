@@ -2,14 +2,11 @@ package com.foretell.minio;
 
 
 import io.micronaut.context.annotation.Property;
-import io.micronaut.http.MediaType;
 import io.micronaut.http.multipart.CompletedFileUpload;
 import io.minio.BucketExistsArgs;
 import io.minio.GetObjectArgs;
 import io.minio.MakeBucketArgs;
 import io.minio.MinioClient;
-import io.minio.ObjectWriteResponse;
-import io.minio.PutObjectArgs;
 import io.minio.UploadObjectArgs;
 import io.minio.errors.ErrorResponseException;
 import io.minio.errors.InsufficientDataException;
@@ -19,12 +16,9 @@ import io.minio.errors.ServerException;
 import io.minio.errors.XmlParserException;
 import jakarta.inject.Singleton;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.compress.utils.IOUtils;
 import org.apache.commons.io.FileUtils;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.security.InvalidKeyException;
@@ -57,7 +51,7 @@ public class MinioService {
         }
     }
 
-    public void uploadFile(CompletedFileUpload file) throws IOException {
+    public void uploadFile(InputStream inputStream, String filename) throws IOException {
         try {
             // Create the bucket if it does not exist
             if (!minioClient.bucketExists(BucketExistsArgs.builder().bucket(bucketName).build())) {
@@ -67,9 +61,8 @@ public class MinioService {
 
             long startMillis = System.currentTimeMillis();
 
-            String filename = file.getFilename();
             File tempFile = File.createTempFile(filename, "");
-            FileUtils.copyInputStreamToFile(file.getInputStream(), tempFile);
+            FileUtils.copyInputStreamToFile(inputStream, tempFile);
             tempFile.canWrite();
             tempFile.canRead();
             UploadObjectArgs uploadObjectArgs = UploadObjectArgs.builder()
@@ -77,7 +70,7 @@ public class MinioService {
                     .object(filename)
                     .filename(tempFile.getAbsolutePath())
                     .build();
-            ObjectWriteResponse response = minioClient.uploadObject(uploadObjectArgs);
+            minioClient.uploadObject(uploadObjectArgs);
             tempFile.delete();
             log.info("upload file {} execution time {} ms", filename, System.currentTimeMillis() - startMillis);
         } catch (InvalidResponseException | XmlParserException | ServerException | NoSuchAlgorithmException | InsufficientDataException | InvalidKeyException | ErrorResponseException | InternalException e) {

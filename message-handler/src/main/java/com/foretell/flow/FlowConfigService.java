@@ -7,7 +7,6 @@ import com.foretell.flow.model.StateModel;
 import com.foretell.flow.model.response.Response;
 import com.foretell.flow.model.response.impl.TextResponseModel;
 import com.foretell.flow.model.response.impl.menu.MenuResponseModel;
-import io.micronaut.context.annotation.Property;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 import lombok.extern.slf4j.Slf4j;
@@ -17,8 +16,6 @@ import org.yaml.snakeyaml.constructor.Constructor;
 import org.yaml.snakeyaml.nodes.Tag;
 
 import java.io.ByteArrayInputStream;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 

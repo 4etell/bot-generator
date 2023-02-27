@@ -1,6 +1,6 @@
 micronaut:
   server:
-    port: 8081
+    port: ${REPLICA_NAME}
   application:
     name: messageHandler
 netty:

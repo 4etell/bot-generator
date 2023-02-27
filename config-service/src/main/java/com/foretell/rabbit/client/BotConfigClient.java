@@ -7,5 +7,5 @@ import io.micronaut.rabbitmq.annotation.RabbitClient;
 public interface BotConfigClient {
 
     @Binding(value = "bot-config-event")
-    void sendMessage(String msg);
+    void sendMessage(ConfigEvent event);
 }

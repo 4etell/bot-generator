@@ -1,7 +1,9 @@
 package com.foretell.controller;
 
-import com.foretell.minio.MinioService;
+import com.foretell.minio.FlowConfigService;
 import com.foretell.rabbit.client.BotConfigClient;
+import com.foretell.util.Pair;
+import io.micronaut.context.annotation.Property;
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.HttpStatus;
 import io.micronaut.http.MediaType;
@@ -10,7 +12,6 @@ import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
 import io.micronaut.http.annotation.Part;
 import io.micronaut.http.annotation.Post;
-import io.micronaut.http.annotation.QueryValue;
 import io.micronaut.http.annotation.Status;
 import io.micronaut.http.multipart.CompletedFileUpload;
 import jakarta.inject.Inject;
@@ -26,28 +27,22 @@ public class MainController {
     private BotConfigClient botConfigClient;
 
     @Inject
-    private MinioService minioService;
+    private FlowConfigService flowConfigService;
 
-    @Get
+    @Post(consumes = {MediaType.MULTIPART_FORM_DATA}, value = "/flow-file")
     @Status(HttpStatus.OK)
-    public void get() {
-        botConfigClient.sendMessage("hello");
+    public void createFlowFile(@Part CompletedFileUpload file) throws IOException {
+        flowConfigService.uploadFlowConfig(file);
     }
 
-    @Post(consumes = {MediaType.MULTIPART_FORM_DATA}, value = "/file")
-    @Status(HttpStatus.OK)
-    public void createFaqFile(@Part CompletedFileUpload file) throws IOException {
-        minioService.uploadFile(file);
-    }
-
-    @Get(value = "/file/download")
-    public Mono<MutableHttpResponse<byte[]>> downLoadFile(@QueryValue String name) throws IOException {
-       return Mono.fromCallable(() -> {
-           byte[] bytes = minioService.downloadFile(name);
-           return HttpResponse.ok(bytes)
-                .header("Content-type", "application/octet-stream")
-                .header("Content-disposition", "attachment; filename=" + name);
-       }
+    @Get(value = "/flow-file/download")
+    public Mono<MutableHttpResponse<byte[]>> downloadFlowFile() {
+        return Mono.fromCallable(() -> {
+                    Pair<byte[], String> bytesAndName = flowConfigService.downloadFlowConfig();
+                    return HttpResponse.ok(bytesAndName.getLeft())
+                            .header("Content-type", "application/octet-stream")
+                            .header("Content-disposition", "attachment; filename=" + bytesAndName.getRight());
+                }
         ).subscribeOn(Schedulers.boundedElastic());
     }
 }

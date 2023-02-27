@@ -36,7 +36,10 @@ public class StateService {
     }
 
     public void updateConfig() {
-        configServiceClient.getFlowInputStream().subscribe(inputStream -> flowConfig.set(flowConfigService.getFlowConfig(inputStream)));
+        configServiceClient.getFlowInputStream().subscribe(inputStream -> {
+            flowConfig.set(flowConfigService.getFlowConfig(inputStream));
+            log.info("Flow config was updated");
+        });
     }
 
 

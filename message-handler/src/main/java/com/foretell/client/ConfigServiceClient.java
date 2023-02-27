@@ -16,8 +16,7 @@ public class ConfigServiceClient {
     }
 
     public Mono<byte[]> getFlowInputStream() {
-        HttpRequest<?> request = HttpRequest.GET(UriBuilder.of("/file/download?name=flow.yml").build());
-
+        HttpRequest<?> request = HttpRequest.GET(UriBuilder.of("/flow-file/download").build());
         return Mono.from(httpClient.retrieve(request, byte[].class));
     }   
 }
