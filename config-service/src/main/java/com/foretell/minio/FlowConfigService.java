@@ -4,6 +4,8 @@ import com.foretell.rabbit.client.BotConfigClient;
 import com.foretell.rabbit.client.ConfigEvent;
 import com.foretell.util.Pair;
 import io.micronaut.context.annotation.Property;
+import io.micronaut.context.annotation.Requires;
+import io.micronaut.context.env.Environment;
 import io.micronaut.http.multipart.CompletedFileUpload;
 import io.micronaut.runtime.event.annotation.EventListener;
 import io.micronaut.runtime.server.event.ServerStartupEvent;
@@ -35,6 +37,7 @@ public class FlowConfigService {
        return Pair.of(minioService.downloadFile(fileName), fileName);
     }
 
+    @Requires(notEnv = Environment.TEST)
     @EventListener
     public void setUpDefaultFlow(ServerStartupEvent event) {
         try {

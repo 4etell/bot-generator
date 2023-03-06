@@ -3,10 +3,15 @@ micronaut:
     name: configService
   server:
     port: 8089
+    context-path: config-service
 netty:
   default:
     allocator:
       max-order: 3
+
+basic-auth:
+  username: ${BASIC_AUTH_USERNAME}
+  password: ${BASIC_AUTH_PASSWORD}
 rabbitmq:
   uri: amqp://localhost:5672
   username: admin
