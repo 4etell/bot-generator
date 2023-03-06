@@ -5,12 +5,16 @@ import com.foretell.rabbit.client.ConfigEvent;
 import com.foretell.util.Pair;
 import io.micronaut.context.annotation.Property;
 import io.micronaut.http.multipart.CompletedFileUpload;
+import io.micronaut.runtime.event.annotation.EventListener;
+import io.micronaut.runtime.server.event.ServerStartupEvent;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
 
 @Singleton
+@Slf4j
 public class FlowConfigService {
 
     @Inject
@@ -31,5 +35,19 @@ public class FlowConfigService {
        return Pair.of(minioService.downloadFile(fileName), fileName);
     }
 
+    @EventListener
+    public void setUpDefaultFlow(ServerStartupEvent event) {
+        try {
+            boolean fileExists = minioService.isFileExists(fileName);
+            if (!fileExists) {
+                log.info("Start upload default flow...");
+                minioService.uploadFile(getClass().getClassLoader().getResourceAsStream("flow.yml"), "flow.yml");
+            } else {
+                log.info("Flow file exists!");
+            }
+        } catch (Exception e) {
+            log.info("error on startup event", e);
+        }
+    }
 
 }

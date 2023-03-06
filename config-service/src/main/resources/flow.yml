@@ -1,0 +1,15 @@
+states:
+  - name: About
+    command: "/about"
+    response:
+      - !text
+        text: "Я бот."
+  - name: Start
+    command: "/start"
+    response:
+      - !menu
+        text: "Привет я бот, ты можешь поменять мою конфигурацию в админ-панели!"
+        rows:
+          - items:
+              - title: Обо мне
+                command: "/about"

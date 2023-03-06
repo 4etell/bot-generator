@@ -2,11 +2,11 @@ package com.foretell.minio;
 
 
 import io.micronaut.context.annotation.Property;
-import io.micronaut.http.multipart.CompletedFileUpload;
 import io.minio.BucketExistsArgs;
 import io.minio.GetObjectArgs;
 import io.minio.MakeBucketArgs;
 import io.minio.MinioClient;
+import io.minio.StatObjectArgs;
 import io.minio.UploadObjectArgs;
 import io.minio.errors.ErrorResponseException;
 import io.minio.errors.InsufficientDataException;
@@ -48,6 +48,17 @@ public class MinioService {
         } catch (InvalidResponseException | XmlParserException | ServerException | NoSuchAlgorithmException | InsufficientDataException | InvalidKeyException | ErrorResponseException | InternalException e) {
             log.error("Error during download file", e);
             throw new IOException("Failed to download file from MinIO", e);
+        }
+    }
+
+    public boolean isFileExists(String fileName) throws IOException {
+        try {
+            return minioClient.statObject(StatObjectArgs.builder().bucket(bucketName).object(fileName).build()) != null;
+        } catch (ErrorResponseException e) {
+            return false;
+        } catch (InvalidResponseException | XmlParserException | ServerException | NoSuchAlgorithmException | InsufficientDataException | InvalidKeyException | InternalException e) {
+            log.error("Error during download file", e);
+            throw new IOException("Failed to check file exist MinIO", e);
         }
     }
 
