@@ -1,0 +1,4 @@
+rabbitmq:
+  uri: ${RABBITMQ_URI}
+  username: ${RABBITMQ_USER}
+  password: ${RABBITMQ_PASSWORD}

@@ -1,8 +1,8 @@
 package com.foretell.subsystem.telegram;
 
-import com.foretell.config.TelegramBotConfig;
 import com.foretell.rabbit.listener.dto.AbstractMessageDto;
 import com.foretell.subsystem.telegram.handler.TelegramMessageHandler;
+import io.micronaut.context.annotation.Property;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 import org.telegram.telegrambots.bots.DefaultAbsSender;
@@ -20,11 +20,11 @@ public class TelegramMessageSender {
     private final DefaultAbsSender bot;
 
     @Inject
-    public TelegramMessageSender(TelegramBotConfig telegramBotConfig) {
+    public TelegramMessageSender(@Property(name = "telegram.token") String telegramToken) {
         this.bot = new DefaultAbsSender(new DefaultBotOptions()) {
             @Override
             public String getBotToken() {
-                return telegramBotConfig.getTelegramBotToken();
+                return telegramToken;
             }
         };
     }

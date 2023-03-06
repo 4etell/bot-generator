@@ -1,6 +1,6 @@
 micronaut:
   server:
-    port: ${REPLICA_NAME}
+    port: 8080
   application:
     name: messageHandler
 netty:
@@ -16,3 +16,5 @@ rabbitmq:
 config-service:
   queue-name: bot-config-${REPLICA_NAME}
   client-url: ${CONFIG_SERVICE_URL}
+  username: admin
+  password: admin

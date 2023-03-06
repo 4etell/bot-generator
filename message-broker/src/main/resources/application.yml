@@ -3,10 +3,14 @@ micronaut:
     name: messageBroker
   server:
     port: 8083
+    context-path: message-broker
 netty:
   default:
     allocator:
       max-order: 3
+
+telegram:
+  token: ${TELEGRAM_BOT_TOKEN}
 
 rabbitmq:
   uri: amqp://localhost:5672

@@ -3,12 +3,15 @@ package com.foretell.rabbit;
 import com.rabbitmq.client.BuiltinExchangeType;
 import com.rabbitmq.client.Channel;
 import io.micronaut.context.annotation.Property;
+import io.micronaut.context.annotation.Requires;
+import io.micronaut.context.env.Environment;
 import io.micronaut.rabbitmq.connect.ChannelInitializer;
 import jakarta.inject.Singleton;
 
 import java.io.IOException;
 
 @Singleton
+@Requires(notEnv = Environment.TEST)
 public class ChannelPoolListener extends ChannelInitializer {
 
     @Property(name = "config-service.queue-name")
@@ -17,6 +20,8 @@ public class ChannelPoolListener extends ChannelInitializer {
     @Override
     public void initialize(Channel channel, String name) throws IOException {
         channel.exchangeDeclare("bot-message", BuiltinExchangeType.DIRECT, true);
+        channel.exchangeDeclare("bot-config", BuiltinExchangeType.FANOUT, true);
+
         channel.queueDeclare("bot-message-in", true, false, false, null);
         channel.queueBind("bot-message-in", "bot-message", "bot-message-in");
         channel.queueDeclare("bot-message-out", true, false, false, null);

@@ -1,0 +1,20 @@
+micronaut:
+  server:
+    port: 8080
+  application:
+    name: messageHandler
+netty:
+  default:
+    allocator:
+      max-order: 3
+
+rabbitmq:
+  uri: ${RABBITMQ_URI}
+  username: ${RABBITMQ_USER}
+  password: ${RABBITMQ_PASSWORD}
+
+config-service:
+  queue-name: bot-config-${HOSTNAME}
+  client-url: ${CONFIG_SERVICE_URL}
+  username: ${CONFIG_SERVICE_USERNAME}
+  password: ${CONFIG_SERVICE_PASSWORD}

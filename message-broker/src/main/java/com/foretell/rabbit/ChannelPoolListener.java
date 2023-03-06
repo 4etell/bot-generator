@@ -2,12 +2,15 @@ package com.foretell.rabbit;
 
 import com.rabbitmq.client.BuiltinExchangeType;
 import com.rabbitmq.client.Channel;
+import io.micronaut.context.annotation.Requires;
+import io.micronaut.context.env.Environment;
 import io.micronaut.rabbitmq.connect.ChannelInitializer;
 import jakarta.inject.Singleton;
 
 import java.io.IOException;
 
 @Singleton
+@Requires(notEnv = Environment.TEST)
 public class ChannelPoolListener extends ChannelInitializer {
 
     @Override
