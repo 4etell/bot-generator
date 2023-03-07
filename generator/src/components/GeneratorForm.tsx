@@ -1,14 +1,24 @@
 import React, {useState} from "react";
 
 import {
-    Box, Button, FormControl, FormErrorMessage, FormLabel, Input, InputGroup, InputRightElement,
+    Box, Button, Code, FormControl, FormErrorMessage, FormLabel, Input, InputGroup, InputRightElement,
+    Link,
+    Modal,
+    ModalBody,
+    ModalCloseButton,
+    ModalContent,
+    ModalFooter,
+    ModalHeader,
+    ModalOverlay,
     NumberDecrementStepper,
     NumberIncrementStepper,
-    NumberInput, NumberInputField, NumberInputStepper
+    NumberInput, NumberInputField, NumberInputStepper, Stack, useDisclosure
 } from "@chakra-ui/react";
+import {ExternalLinkIcon} from '@chakra-ui/icons'
 import {Field, Form, Formik} from "formik";
+import {generateFile} from "../util/Generator";
 
-interface FormValues {
+export interface FormValues {
     email: string;
     domain: string;
     adminUsername: string;
@@ -19,6 +29,8 @@ interface FormValues {
 }
 
 function GeneratorForm() {
+    const {isOpen, onOpen, onClose} = useDisclosure()
+
 
     const [showPassword, setShowPassword] = useState(false);
     const [showTelegramToken, setShowTelegramToken] = useState(false);
@@ -34,10 +46,9 @@ function GeneratorForm() {
     };
 
     const onSubmit = (values: FormValues, actions: any) => {
-        setTimeout(() => {
-            alert(JSON.stringify(values, null, 2))
-            actions.setSubmitting(false)
-        }, 1000)
+        generateFile(values);
+        onOpen();
+        actions.setSubmitting(false);
     }
 
     const validateEmail = (value: string) => {
@@ -164,8 +175,9 @@ function GeneratorForm() {
                             {({field, form}: { field: any; form: any }) => (
                                 <FormControl mt={4}>
                                     <FormLabel>Message-broker replicas</FormLabel>
-                                    <NumberInput  defaultValue={1} min={1} max={10} onChange={val=>form.setFieldValue(field.name, val)}  >
-                                    <NumberInputField/>
+                                    <NumberInput defaultValue={1} min={1} max={10}
+                                                 onChange={val => form.setFieldValue(field.name, val)}>
+                                        <NumberInputField/>
                                         <NumberInputStepper>
                                             <NumberIncrementStepper/>
                                             <NumberDecrementStepper/>
@@ -178,7 +190,8 @@ function GeneratorForm() {
                             {({field, form}: { field: any; form: any }) => (
                                 <FormControl mt={4}>
                                     <FormLabel>Message-handler replicas</FormLabel>
-                                    <NumberInput  defaultValue={1} min={1} max={10} onChange={val=>form.setFieldValue(field.name, val)}  >
+                                    <NumberInput defaultValue={1} min={1} max={10}
+                                                 onChange={val => form.setFieldValue(field.name, val)}>
                                         <NumberInputField/>
                                         <NumberInputStepper>
                                             <NumberIncrementStepper/>
@@ -201,6 +214,47 @@ function GeneratorForm() {
                     </Form>
                 )}
             </Formik>
+            <Modal closeOnOverlayClick={false} isOpen={isOpen} onClose={onClose}>
+                <ModalOverlay/>
+                <ModalContent>
+                    <ModalHeader>Instruction</ModalHeader>
+                    <ModalCloseButton/>
+                    <ModalBody>
+                        <Stack direction='column'>
+                            <div>
+                                Wait for the archive to finish loading.
+                                Make sure you have a Server.
+                                Also, ensure that there is a DNS record for the domain you entered pointing to this
+                                server.
+                            </div>
+                            <div>
+                                {"And you should have Docker and Docker Compose installed on your Server. Please read guide on installing "}
+                                <Link href='https://docs.docker.com/engine/install/' isExternal>
+                                    {"Docker"}<ExternalLinkIcon mx='2px'/>
+                                </Link>
+                                {" and "}
+                                <Link href='https://docs.docker.com/compose/install/' isExternal>
+                                    {"Docker Compose"}<ExternalLinkIcon mx='2px'/>
+                                </Link>
+                                {" on CentOS."}
+                            </div>
+                            <div>
+                                Create a directory on the server and move the archive there.
+                                Then, follow the commands below:
+                            </div>
+                            <Code children='sudo unzip bot.zip'/>
+                            <Code children='sudo chmod +x setup.sh'/>
+                            <Code children='sudo ./setup.sh'/>
+                        </Stack>
+                    </ModalBody>
+
+                    <ModalFooter>
+                        <Button colorScheme='blue' mr={3} onClick={onClose}>
+                            Close
+                        </Button>
+                    </ModalFooter>
+                </ModalContent>
+            </Modal>
         </Box>
     );
 }
