@@ -7,6 +7,7 @@ import io.micronaut.http.annotation.Body;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Post;
 import io.micronaut.http.annotation.Status;
+import io.micronaut.scheduling.annotation.Async;
 import jakarta.inject.Inject;
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import org.telegram.telegrambots.meta.api.objects.Message;
@@ -18,6 +19,7 @@ public class TelegramController {
     private BotMessageClient botMessageClient;
 
     @Post
+    @Async
     @Status(HttpStatus.OK)
     public void webhook(@Body Update update) {
         botMessageClient.sendMessage(
