@@ -50,7 +50,7 @@ public class StateService {
                 throw new StateServiceException(errorText);
             }
             String messagePath = getPath(messageCommand);
-            return getStateByPredicate(s -> commandEquals(messagePath, s.getCommand())).orElseThrow(() -> new StateServiceException("Cannot find state by command: " + messageCommand));
+            return getStateByPredicate(s -> commandEquals(messagePath, s.command())).orElseThrow(() -> new StateServiceException("Cannot find state by command: " + messageCommand));
         });
     }
 
@@ -58,7 +58,7 @@ public class StateService {
         if (stateName == null) {
             throw new StateServiceException("Given stateName is null!");
         }
-        return getStateByPredicate(s -> stateName.equals(s.getName()))
+        return getStateByPredicate(s -> stateName.equals(s.name()))
                 .orElseThrow(() -> new StateServiceException(String.format("Cannot find state by name: %s", stateName)));
     }
 
@@ -91,7 +91,7 @@ public class StateService {
         List<StateDto> stateDtoList =
                 flowConfig
                         .get()
-                        .getStates()
+                        .states()
                         .stream()
                         .filter(predicate)
                         .toList();

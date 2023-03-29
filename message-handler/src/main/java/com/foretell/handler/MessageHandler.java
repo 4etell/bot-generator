@@ -40,7 +40,7 @@ public class MessageHandler {
 
     public void handleMessage(UserMessageDto userMessageDto) {
         stateService.getStateByCommand(userMessageDto.getCommand())
-                .flatMapMany(state -> Flux.fromIterable(state.getResponse()))
+                .flatMapMany(state -> Flux.fromIterable(state.response()))
                 .flatMap(response -> getAnswer(userMessageDto, response)
                         .doOnError(e -> log.error("Error occurred while getting answer:", e))
                         .onErrorResume(e -> Flux.just(getAnswerErrorMessage(userMessageDto)))
@@ -62,17 +62,16 @@ public class MessageHandler {
         switch (responseType) {
             case TEXT_RESPONSE -> {
                 TextResponseDto textResponse = (TextResponseDto) response;
-                return Flux.just(new MessageTextDto(chatId, textResponse.getText()));
+                return Flux.just(new MessageTextDto(chatId, textResponse.text()));
             }
             case MENU_RESPONSE -> {
                 MenuResponseDto menuResponse = (MenuResponseDto) response;
-                log.info("Menu responseDto {}", menuResponse);
                 List<MenuRowDto> rows = menuResponse
-                        .getRows()
+                        .rows()
                         .stream()
                         .map(menuRow -> menuMapper.menuRowToMenuRowDto(menuRow))
                         .toList();
-                return Flux.just(new MessageMenuDto(chatId, menuResponse.getText(), rows));
+                return Flux.just(new MessageMenuDto(chatId, menuResponse.text(), rows));
             }
             default -> {
                 return Flux.error(new IllegalArgumentException("Cannot recognize responseType"));
