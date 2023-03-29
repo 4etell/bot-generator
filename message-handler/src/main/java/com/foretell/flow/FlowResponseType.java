@@ -1,9 +1,9 @@
-package com.foretell.flow.model.response;
+package com.foretell.flow;
 
 /**
  * The enum Response type.
  */
-public enum ResponseType {
+public enum FlowResponseType {
     TEXT_RESPONSE,
     MENU_RESPONSE
 }

@@ -1,10 +1,10 @@
 package com.foretell.handler;
 
 import com.foretell.flow.StateService;
-import com.foretell.flow.dto.response.ResponseDto;
-import com.foretell.flow.dto.response.impl.TextResponseDto;
-import com.foretell.flow.dto.response.impl.menu.MenuResponseDto;
-import com.foretell.flow.model.response.ResponseType;
+import com.foretell.flow.dto.response.FlowResponseDto;
+import com.foretell.flow.dto.response.impl.TextFlowResponseDto;
+import com.foretell.flow.dto.response.impl.menu.MenuFlowResponseDto;
+import com.foretell.flow.FlowResponseType;
 import com.foretell.handler.mapper.MenuMapper;
 import com.foretell.rabbit.client.BotMessageClient;
 import com.foretell.rabbit.client.dto.AbstractMessageDto;
@@ -56,16 +56,16 @@ public class MessageHandler {
     }
 
 
-    private Flux<AbstractMessageDto> getAnswer(UserMessageDto messageEntity, ResponseDto response) {
+    private Flux<AbstractMessageDto> getAnswer(UserMessageDto messageEntity, FlowResponseDto response) {
         String chatId = String.valueOf(messageEntity.getChatId());
-        ResponseType responseType = response.getResponseType();
-        switch (responseType) {
+        FlowResponseType flowResponseType = response.getResponseType();
+        switch (flowResponseType) {
             case TEXT_RESPONSE -> {
-                TextResponseDto textResponse = (TextResponseDto) response;
+                TextFlowResponseDto textResponse = (TextFlowResponseDto) response;
                 return Flux.just(new MessageTextDto(chatId, textResponse.text()));
             }
             case MENU_RESPONSE -> {
-                MenuResponseDto menuResponse = (MenuResponseDto) response;
+                MenuFlowResponseDto menuResponse = (MenuFlowResponseDto) response;
                 List<MenuRowDto> rows = menuResponse
                         .rows()
                         .stream()

@@ -4,9 +4,9 @@ import com.foretell.flow.dto.FlowConfigDto;
 import com.foretell.flow.mapper.FlowConfigMapper;
 import com.foretell.flow.model.FlowConfigModel;
 import com.foretell.flow.model.StateModel;
-import com.foretell.flow.model.response.Response;
-import com.foretell.flow.model.response.impl.TextResponseModel;
-import com.foretell.flow.model.response.impl.menu.MenuResponseModel;
+import com.foretell.flow.model.response.FlowResponse;
+import com.foretell.flow.model.response.impl.TextFlowResponseModel;
+import com.foretell.flow.model.response.impl.menu.MenuFlowResponseModel;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 import lombok.extern.slf4j.Slf4j;
@@ -29,10 +29,10 @@ public class FlowConfigService {
     public FlowConfigDto getFlowConfig(byte[] bytes) {
         Constructor constructor = new Constructor(FlowConfigModel.class);
         constructor.addTypeDescription(new TypeDescription(StateModel.class));
-        constructor.addTypeDescription(new TypeDescription(Response.class));
+        constructor.addTypeDescription(new TypeDescription(FlowResponse.class));
 
-        constructor.addTypeDescription(new TypeDescription(TextResponseModel.class, new Tag("!text")));
-        constructor.addTypeDescription(new TypeDescription(MenuResponseModel.class, new Tag("!menu")));
+        constructor.addTypeDescription(new TypeDescription(TextFlowResponseModel.class, new Tag("!text")));
+        constructor.addTypeDescription(new TypeDescription(MenuFlowResponseModel.class, new Tag("!menu")));
 
         Yaml yaml = new Yaml(constructor);
 

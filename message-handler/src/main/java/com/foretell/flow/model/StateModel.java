@@ -1,6 +1,6 @@
 package com.foretell.flow.model;
 
-import com.foretell.flow.model.response.Response;
+import com.foretell.flow.model.response.FlowResponse;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,7 +17,7 @@ public class StateModel {
 
     private String command;
 
-    private List<Response> response;
+    private List<FlowResponse> flowResponse;
 
     private String nextStateName;
 

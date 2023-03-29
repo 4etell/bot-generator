@@ -1,12 +1,12 @@
 package com.foretell.flow.dto.response;
 
-import com.foretell.flow.model.response.ResponseType;
+import com.foretell.flow.FlowResponseType;
 
-public interface ResponseDto {
+public interface FlowResponseDto {
     /**
      * Gets response type.
      *
      * @return the response type
      */
-    ResponseType getResponseType();
+    FlowResponseType getResponseType();
 }

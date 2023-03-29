@@ -8,7 +8,7 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-public class MenuRowItemModel {
+public class MenuRowItemFlowModel {
 
     private String title;
 

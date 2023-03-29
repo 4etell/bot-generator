@@ -1,14 +1,14 @@
 package com.foretell.flow.mapper;
 
 import com.foretell.flow.dto.FlowConfigDto;
-import com.foretell.flow.dto.response.ResponseDto;
-import com.foretell.flow.dto.response.impl.TextResponseDto;
-import com.foretell.flow.dto.response.impl.menu.MenuResponseDto;
+import com.foretell.flow.dto.response.FlowResponseDto;
+import com.foretell.flow.dto.response.impl.TextFlowResponseDto;
+import com.foretell.flow.dto.response.impl.menu.MenuFlowResponseDto;
 import com.foretell.flow.model.FlowConfigModel;
-import com.foretell.flow.model.response.Response;
-import com.foretell.flow.model.response.ResponseType;
-import com.foretell.flow.model.response.impl.TextResponseModel;
-import com.foretell.flow.model.response.impl.menu.MenuResponseModel;
+import com.foretell.flow.model.response.FlowResponse;
+import com.foretell.flow.FlowResponseType;
+import com.foretell.flow.model.response.impl.TextFlowResponseModel;
+import com.foretell.flow.model.response.impl.menu.MenuFlowResponseModel;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingConstants;
 
@@ -17,21 +17,21 @@ public interface FlowConfigMapper {
 
     FlowConfigDto mapFlowConfigModelToFlowConfigDto(FlowConfigModel flowConfigModel);
 
-    TextResponseDto mapTextResponseToTextResponseDto(TextResponseModel textResponseModel);
+    TextFlowResponseDto mapTextResponseToTextResponseDto(TextFlowResponseModel textResponseModel);
 
-    MenuResponseDto mapMenuResponseToMenuResponseDto(MenuResponseModel menuResponseModel);
+    MenuFlowResponseDto mapMenuResponseToMenuResponseDto(MenuFlowResponseModel menuResponseModel);
 
-    default ResponseDto mapResponseToResponseDto(Response response) {
+    default FlowResponseDto mapResponseToResponseDto(FlowResponse flowResponse) {
         // implementation
-        ResponseType responseType = response.getResponseType();
-        switch (responseType) {
+        FlowResponseType flowResponseType = flowResponse.getResponseType();
+        switch (flowResponseType) {
             case TEXT_RESPONSE -> {
-                return mapTextResponseToTextResponseDto((TextResponseModel) response);
+                return mapTextResponseToTextResponseDto((TextFlowResponseModel) flowResponse);
             }
             case MENU_RESPONSE -> {
-                return mapMenuResponseToMenuResponseDto((MenuResponseModel) response);
+                return mapMenuResponseToMenuResponseDto((MenuFlowResponseModel) flowResponse);
             }
-            default -> throw new IllegalArgumentException(String.format("Cannot recognize responseType %s", responseType));
+            default -> throw new IllegalArgumentException(String.format("Cannot recognize responseType %s", flowResponseType));
         }
     }
 }

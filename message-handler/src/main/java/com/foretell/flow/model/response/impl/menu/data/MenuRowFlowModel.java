@@ -7,6 +7,6 @@ import java.util.List;
 
 @Getter
 @Setter
-public class MenuRowModel {
-    private List<MenuRowItemModel> items;
+public class MenuRowFlowModel {
+    private List<MenuRowItemFlowModel> items;
 }
