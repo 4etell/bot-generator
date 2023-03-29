@@ -1,6 +1,5 @@
 package com.foretell.flow.model.response.impl.menu.data;
 
-import com.foretell.flow.model.response.impl.menu.data.MenuRowItemModel;
 import lombok.Getter;
 import lombok.Setter;
 

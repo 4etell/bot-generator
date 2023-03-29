@@ -17,6 +17,7 @@ import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Flux;
+import reactor.core.scheduler.Schedulers;
 
 import java.util.List;
 
@@ -44,6 +45,7 @@ public class MessageHandler {
                         .doOnError(e -> log.error("Error occurred while getting answer:", e))
                         .onErrorResume(e -> Flux.just(getAnswerErrorMessage(userMessageDto)))
                 )
+                .subscribeOn(Schedulers.boundedElastic())
                 .subscribe(
                         botMessageClient::sendMessage,
                         error -> {
