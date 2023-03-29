@@ -1,4 +1,4 @@
-package com.foretell.rabbit.client.dto;
+package com.foretell.rabbit.client.dto.impl.menu.data;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

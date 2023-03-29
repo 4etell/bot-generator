@@ -1,4 +1,4 @@
-package com.foretell.rabbit.client.dto;
+package com.foretell.rabbit.client.dto.impl.file.data;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;

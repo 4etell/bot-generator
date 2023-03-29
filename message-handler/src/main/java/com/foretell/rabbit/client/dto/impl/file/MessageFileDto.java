@@ -1,7 +1,9 @@
-package com.foretell.rabbit.client.dto;
+package com.foretell.rabbit.client.dto.impl.file;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.foretell.rabbit.client.dto.AbstractMessageDto;
+import com.foretell.rabbit.client.dto.impl.file.data.FileDto;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;

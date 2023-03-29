@@ -2,6 +2,9 @@ package com.foretell.rabbit.client.dto;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.foretell.rabbit.client.dto.impl.file.MessageFileDto;
+import com.foretell.rabbit.client.dto.impl.menu.MessageMenuDto;
+import com.foretell.rabbit.client.dto.impl.text.MessageTextDto;
 import lombok.Getter;
 import lombok.ToString;
 
