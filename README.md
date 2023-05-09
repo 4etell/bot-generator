@@ -1,6 +1,6 @@
 # Бот система
 ## Архитектура
-![Diagram](https://github.com/4etell/bot-generator/blob/master/arch_v1.jpg)
+![Diagram](https://github.com/4etell/bot-generator/blob/master/arch_v2.png)
 ## API для взаимодействия с config-service
 ```yaml
 openapi: 3.0.1
